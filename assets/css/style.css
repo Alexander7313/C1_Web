@@ -1,0 +1,103 @@
+:root {
+    --primary: #4e73df;
+    --success: #1cc88a;
+    --info: #36b9cc;
+    --warning: #f6c23e;
+    --danger: #e74a3b;
+    --secondary: #858796;
+    --dark: #5a5c69;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fc;
+    color: #5a5c69;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container-main {
+    flex: 1;
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+/* Navbar Custom */
+.navbar-brand {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.nav-link {
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+/* Cards Decor */
+.card {
+    border: none;
+    border-radius: 0.75rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
+}
+
+.border-left-primary { border-left: 0.25rem solid var(--primary) !important; }
+.border-left-success { border-left: 0.25rem solid var(--success) !important; }
+.border-left-info { border-left: 0.25rem solid var(--info) !important; }
+
+/* Dashboard text sizes */
+.text-xs { font-size: .7rem; }
+
+/* Animations */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tables */
+.table {
+    border-collapse: separate;
+    border-spacing: 0 8px;
+}
+
+.table thead th {
+    border-bottom: none;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    color: #b7b9cc;
+    font-weight: 800;
+}
+
+.table tbody tr {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    border-radius: 8px;
+}
+
+.table tbody td {
+    border-top: none;
+    padding: 1rem 0.75rem;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #fdfdfd;
+}
+
+/* Form inputs focus */
+.form-control:focus, .form-select:focus {
+    box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.1);
+    border-color: var(--primary);
+}
+
+.footer {
+    background: #fff !important;
+}
