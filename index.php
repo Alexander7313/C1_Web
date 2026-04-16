@@ -1,6 +1,29 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once "config/conexion.php";
+
+// Redirigir si ya está logueado
+if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
+    header("Location: dashboard.php");
+    exit();
+}
+
+$error = "";
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
+    $usuario = $_POST['usuario'];
+    $password = $_POST['password'];
+
+    if ($usuario === "admin" && $password === "admin123") {
+        $_SESSION['admin_logged_in'] = true;
+        $_SESSION['usuario'] = "Administrador";
+        header("Location: dashboard.php");
+        exit();
+    } else {
+        $error = "Credenciales incorrectas";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -56,6 +79,10 @@ require_once "config/conexion.php";
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             color: #1f2937;
             text-align: center;
+            min-height: 480px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         .btn-action {
             padding: 1rem;
@@ -71,6 +98,7 @@ require_once "config/conexion.php";
         .btn-primary-custom {
             background-color: var(--primary);
             color: white;
+            border: none;
         }
         .btn-primary-custom:hover {
             background-color: var(--dark-blue);
@@ -85,6 +113,16 @@ require_once "config/conexion.php";
             background-color: var(--primary);
             color: white;
             transform: translateY(-3px);
+        }
+        .login-input {
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+        }
+        .login-input:focus {
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+            border-color: var(--primary);
         }
         .footer-landing {
             position: absolute;
@@ -129,29 +167,37 @@ require_once "config/conexion.php";
                 </div>
             </div>
 
-            <!-- Card de Acciones -->
+            <!-- Card de Acceso -->
             <div class="col-lg-5 col-xl-4 offset-xl-1">
                 <div class="card action-card">
                     <div class="text-center mb-4">
-                        <i class="fas fa-id-badge fa-4x text-primary mb-3"></i>
-                        <h3 class="fw-bold">Acceso al Sistema</h3>
-                        <p class="text-muted small">Seleccione la acción que desea realizar</p>
+                        <i class="fas fa-user-shield fa-4x text-primary mb-3"></i>
+                        <h3 class="fw-bold">Iniciar Sesión</h3>
+                        <p class="text-muted small">Panel de Control de Visitantes</p>
                     </div>
 
-                    <a href="dashboard.php" class="btn-action btn-primary-custom shadow">
-                        <i class="fas fa-gauge-high me-3"></i> Panel de Control
-                    </a>
+                    <?php if ($error): ?>
+                        <div class="alert alert-danger py-2 small mb-4">
+                            <i class="fas fa-exclamation-circle me-2"></i><?php echo $error; ?>
+                        </div>
+                    <?php endif; ?>
 
-                    <a href="modulos/registro_entrada.php" class="btn-action btn-outline-custom">
-                        <i class="fas fa-user-plus me-3"></i> Nueva Entrada
-                    </a>
-
-                    <a href="modulos/registro_salida.php" class="btn-action btn-outline-custom">
-                        <i class="fas fa-door-open me-3"></i> Registrar Salida
-                    </a>
-
+                    <form method="POST" action="">
+                        <div class="mb-3 text-start">
+                            <label class="form-label small fw-bold">Usuario</label>
+                            <input type="text" name="usuario" class="form-control login-input" placeholder="admin" required autofocus>
+                        </div>
+                        <div class="mb-4 text-start">
+                            <label class="form-label small fw-bold">Contraseña</label>
+                            <input type="password" name="password" class="form-control login-input" placeholder="••••••••" required>
+                        </div>
+                        <button type="submit" name="login" class="btn-action btn-primary-custom w-100 shadow-sm">
+                            <i class="fas fa-sign-in-alt me-2"></i> Ingresar al Sistema
+                        </button>
+                    </form>
+                    
                     <div class="mt-4 text-center">
-                        <p class="text-muted small mb-0">Unidad de Tecnologías de la Información</p>
+                        <p class="text-muted small mb-0 opacity-50">Unidad de Tecnologías de la Información</p>
                     </div>
                 </div>
             </div>

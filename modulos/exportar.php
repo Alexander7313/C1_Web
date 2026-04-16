@@ -1,4 +1,11 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    header("Location: ../index.php");
+    exit();
+}
 require_once "../config/conexion.php";
 
 // Filtros (mismos que consultas.php)

@@ -34,6 +34,19 @@
                     </a>
                 </li>
             </ul>
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item me-3">
+                    <span class="text-light opacity-75 small">
+                        <i class="fas fa-user-circle me-1"></i> 
+                        <?php echo isset($_SESSION['usuario']) ? $_SESSION['usuario'] : 'Admin'; ?>
+                    </span>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-outline-danger btn-sm rounded-pill px-3" href="<?php echo BASE_URL; ?>logout.php">
+                        <i class="fas fa-power-off me-2"></i>Cerrar Sesión
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
