@@ -56,8 +56,10 @@ $despachos = mysqli_query($conexion, "SELECT * FROM despacho ORDER BY nombre ASC
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">DNI / Documento</label>
-                                <input type="text" name="dni" id="dni_input" class="form-control" placeholder="Ingrese DNI" required>
-                                <small class="text-muted">Si el visitante ya existe, sus datos se cargarán.</small>
+                                <input type="text" name="dni" id="dni_input" class="form-control" 
+                                       placeholder="Ingrese DNI" maxlength="8" 
+                                       onkeypress="return event.charCode >= 48 && event.charCode <= 57" required>
+                                <small class="text-muted">Debe tener 8 dígitos numéricos.</small>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Nombre Completo</label>
@@ -97,16 +99,15 @@ $despachos = mysqli_query($conexion, "SELECT * FROM despacho ORDER BY nombre ASC
 <script>
 // Pequeño script para autocompletar nombre si el DNI ya existe (vía fetch)
 // Nota: Para este ejemplo solo dejaré el esqueleto, pero es una buena práctica
-document.getElementById('dni_input')?.addEventListener('blur', function() {
+document.getElementById('dni_input')?.addEventListener('input', function() {
     const dni = this.value;
-    if (dni.length >= 8) {
+    if (dni.length === 8) {
         fetch(`get_persona.php?dni=${dni}`)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    document.getElementById('nombre_input').value = data.nombre;
-                    // Opcional: mostrar un aviso visual
                     const nombreInput = document.getElementById('nombre_input');
+                    nombreInput.value = data.nombre;
                     nombreInput.classList.add('is-valid');
                     setTimeout(() => nombreInput.classList.remove('is-valid'), 2000);
                 }

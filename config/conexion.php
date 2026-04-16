@@ -16,6 +16,10 @@ if (!$conexion) {
 // Establecer conjunto de caracteres utf8
 mysqli_set_charset($conexion, "utf8");
 
+// Configurar Zona Horaria (Perú)
+date_default_timezone_set('America/Lima');
+mysqli_query($conexion, "SET time_zone = '-05:00'");
+
 // Definir URL base dinámica (se adapta al nombre de la carpeta en htdocs)
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
 $folder = basename(dirname(__DIR__));

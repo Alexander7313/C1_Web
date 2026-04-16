@@ -34,18 +34,6 @@
                     </a>
                 </li>
             </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                        <i class="fas fa-user-circle me-1"></i> <?php echo $_SESSION['username']; ?>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item text-danger" href="<?php echo BASE_URL; ?>auth/logout.php">
-                            <i class="fas fa-power-off me-2"></i>Cerrar Sesión
-                        </a></li>
-                    </ul>
-                </li>
-            </ul>
         </div>
     </div>
 </nav>

@@ -35,6 +35,14 @@ $sql_avg = "SELECT AVG(TIME_TO_SEC(TIMEDIFF(hora_salida, hora_entrada))) / 60 as
 $res_avg = mysqli_query($conexion, $sql_avg);
 $avg_min = mysqli_fetch_assoc($res_avg)['minutos_promedio'];
 $avg_formato = round($avg_min) . " minutos";
+
+// 4. Historial de Visitas (últimas 20)
+$sql_historial = "SELECT v.*, p.nombre as visitante, p.dni, d.nombre as despacho 
+                  FROM visita v 
+                  JOIN persona p ON v.id_persona = p.id_persona 
+                  JOIN despacho d ON v.id_despacho = d.id_despacho 
+                  ORDER BY v.fecha DESC, v.hora_entrada DESC LIMIT 20";
+$res_historial = mysqli_query($conexion, $sql_historial);
 ?>
 
 <div class="container container-main fade-in">
@@ -79,6 +87,55 @@ $avg_formato = round($avg_min) . " minutos";
                 </div>
                 <div class="card-body">
                     <canvas id="chartDespachos" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+        <!-- Historial de Visitas -->
+        <div class="col-12 mb-4">
+            <div class="card shadow">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-primary">Historial Reciente de Visitas</h6>
+                    <div>
+                        <a href="exportar.php?tipo=csv" class="btn btn-sm btn-outline-secondary"><i class="fas fa-file-csv"></i></a>
+                        <a href="exportar.php?tipo=excel" class="btn btn-sm btn-outline-success"><i class="fas fa-file-excel"></i></a>
+                        <a href="consultas.php" class="btn btn-sm btn-primary ms-2 text-white">Ver todos</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-striped table-hover small">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Visitante</th>
+                                    <th>DNI</th>
+                                    <th>Persona Visitada</th>
+                                    <th>Despacho</th>
+                                    <th>E.</th>
+                                    <th>S.</th>
+                                    <th>Permanencia</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if (mysqli_num_rows($res_historial) > 0): ?>
+                                    <?php while($row = mysqli_fetch_assoc($res_historial)): ?>
+                                        <tr>
+                                            <td><?php echo $row['fecha']; ?></td>
+                                            <td class="fw-bold"><?php echo $row['visitante']; ?></td>
+                                            <td><?php echo $row['dni']; ?></td>
+                                            <td><?php echo $row['persona_visitada']; ?></td>
+                                            <td><?php echo $row['despacho']; ?></td>
+                                            <td><span class="text-success"><?php echo $row['hora_entrada']; ?></span></td>
+                                            <td><span class="text-danger"><?php echo $row['hora_salida'] ?? '--:--'; ?></span></td>
+                                            <td><span class="badge bg-light text-dark border"><?php echo $row['tiempo_permanencia'] ?? 'En curso'; ?></span></td>
+                                        </tr>
+                                    <?php endwhile; ?>
+                                <?php else: ?>
+                                    <tr><td colspan="8" class="text-center py-3">No hay registros</td></tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

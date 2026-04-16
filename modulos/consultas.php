@@ -72,8 +72,11 @@ $despachos = mysqli_query($conexion, "SELECT * FROM despacho ORDER BY nombre ASC
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="mb-0">Resultados</h5>
                         <div>
-                            <a href="exportar.php?tipo=csv&<?php echo $_SERVER['QUERY_STRING']; ?>" class="btn btn-sm btn-outline-dark">
-                                <i class="fas fa-file-csv me-1"></i> Exportar CSV
+                            <a href="exportar.php?tipo=csv&<?php echo $_SERVER['QUERY_STRING']; ?>" class="btn btn-sm btn-outline-secondary">
+                                <i class="fas fa-file-csv me-1"></i> CSV
+                            </a>
+                            <a href="exportar.php?tipo=excel&<?php echo $_SERVER['QUERY_STRING']; ?>" class="btn btn-sm btn-outline-success">
+                                <i class="fas fa-file-excel me-1"></i> Excel
                             </a>
                         </div>
                     </div>

@@ -2,13 +2,6 @@
 CREATE DATABASE IF NOT EXISTS control_visitantes;
 USE control_visitantes;
 
--- Tabla de usuarios (para el personal de seguridad/admin)
-CREATE TABLE IF NOT EXISTS usuario (
-    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL
-);
-
 -- Tabla de despachos/oficinas
 CREATE TABLE IF NOT EXISTS despacho (
     id_despacho INT AUTO_INCREMENT PRIMARY KEY,
@@ -35,11 +28,6 @@ CREATE TABLE IF NOT EXISTS visita (
     FOREIGN KEY (id_persona) REFERENCES persona(id_persona),
     FOREIGN KEY (id_despacho) REFERENCES despacho(id_despacho)
 );
-
--- Insertar usuario por defecto (admin / admin123)
--- Usamos MD5 para el ejemplo rápido, aunque en PHP usaremos password_hash. 
--- Para admin123 el hash MD5 es: 0192023a7bbd73250516f069df18b500
-INSERT INTO usuario (username, password) VALUES ('admin', '0192023a7bbd73250516f069df18b500');
 
 -- Datos de prueba para despachos
 INSERT INTO despacho (nombre) VALUES 
