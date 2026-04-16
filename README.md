@@ -2,6 +2,17 @@
 
 Este es un sistema web profesional diseñado para el registro y gestión de ingresos de visitantes en entidades gubernamentales o corporativas. Permite un seguimiento en tiempo real de quiénes ingresan, a qué oficina se dirigen y cuánto tiempo permanecen en las instalaciones.
 
+## Credenciales de Acceso
+
+- **Usuario**: admin
+- **Contraseña**: admin123
+
+## DESARROLLADO POR
+
+- Junior Quispe Aquino
+- Alexander Nelson Landa Rojas 
+
+
 ## 🚀 Características Principales
 
 - **📦 Gestión de Visitantes**: Registro automático de personas mediante DNI.
