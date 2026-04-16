@@ -22,10 +22,11 @@ $res_total = mysqli_query($conexion, $sql_total);
 $total_historico = mysqli_fetch_assoc($res_total)['total'];
 
 // Últimas 5 visitas
-$sql_ultimas = "SELECT v.*, p.nombre as visitante, d.nombre as despacho 
+$sql_ultimas = "SELECT v.*, p.nombre as visitante, d.nombre as despacho, f.nombre as funcionario 
                 FROM visita v 
                 JOIN persona p ON v.id_persona = p.id_persona 
                 JOIN despacho d ON v.id_despacho = d.id_despacho 
+                JOIN funcionario f ON v.id_funcionario = f.id_funcionario
                 ORDER BY v.id_visita DESC LIMIT 5";
 $res_ultimas = mysqli_query($conexion, $sql_ultimas);
 ?>
@@ -115,7 +116,7 @@ $res_ultimas = mysqli_query($conexion, $sql_ultimas);
                                         <tr>
                                             <td class="fw-bold text-dark"><?php echo $row['visitante']; ?></td>
                                             <td><span class="badge bg-light text-dark border"><?php echo $row['despacho']; ?></span></td>
-                                            <td><?php echo $row['persona_visitada']; ?></td>
+                                            <td><?php echo $row['funcionario']; ?></td>
                                             <td><?php echo $row['hora_entrada']; ?></td>
                                             <td>
                                                 <?php if($row['hora_salida']): ?>

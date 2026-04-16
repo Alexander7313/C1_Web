@@ -11,11 +11,12 @@ if ($f_fecha) $where .= " AND v.fecha = '$f_fecha'";
 if ($f_nombre) $where .= " AND p.nombre LIKE '%$f_nombre%'";
 if ($f_despacho) $where .= " AND v.id_despacho = $f_despacho";
 
-$sql = "SELECT v.fecha, p.nombre as visitante, p.dni, v.persona_visitada, d.nombre as despacho, 
+$sql = "SELECT v.fecha, p.nombre as visitante, p.dni, f.nombre as funcionario, d.nombre as despacho, 
                v.hora_entrada, v.hora_salida, v.tiempo_permanencia
         FROM visita v 
         JOIN persona p ON v.id_persona = p.id_persona 
         JOIN despacho d ON v.id_despacho = d.id_despacho 
+        JOIN funcionario f ON v.id_funcionario = f.id_funcionario
         $where 
         ORDER BY v.fecha DESC";
 
@@ -45,7 +46,7 @@ if ($tipo == 'excel') {
         echo "<td>" . $row['fecha'] . "</td>";
         echo "<td>" . $row['visitante'] . "</td>";
         echo "<td>" . $row['dni'] . "</td>";
-        echo "<td>" . $row['persona_visitada'] . "</td>";
+        echo "<td>" . $row['funcionario'] . "</td>";
         echo "<td>" . $row['despacho'] . "</td>";
         echo "<td>" . $row['hora_entrada'] . "</td>";
         echo "<td>" . ($row['hora_salida'] ?? 'N/A') . "</td>";
@@ -68,7 +69,7 @@ if ($tipo == 'excel') {
             $row['fecha'],
             $row['visitante'],
             $row['dni'],
-            $row['persona_visitada'],
+            $row['funcionario'],
             $row['despacho'],
             $row['hora_entrada'],
             $row['hora_salida'] ?? 'N/A',

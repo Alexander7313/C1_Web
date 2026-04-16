@@ -8,6 +8,15 @@ CREATE TABLE IF NOT EXISTS despacho (
     nombre VARCHAR(100) NOT NULL
 );
 
+-- Tabla de funcionarios (personas a visitar)
+CREATE TABLE IF NOT EXISTS funcionario (
+    id_funcionario INT AUTO_INCREMENT PRIMARY KEY,
+    id_despacho INT NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    cargo VARCHAR(100),
+    FOREIGN KEY (id_despacho) REFERENCES despacho(id_despacho)
+);
+
 -- Tabla de personas (visitantes)
 CREATE TABLE IF NOT EXISTS persona (
     id_persona INT AUTO_INCREMENT PRIMARY KEY,
@@ -20,13 +29,14 @@ CREATE TABLE IF NOT EXISTS visita (
     id_visita INT AUTO_INCREMENT PRIMARY KEY,
     id_persona INT NOT NULL,
     id_despacho INT NOT NULL,
-    persona_visitada VARCHAR(100) NOT NULL,
+    id_funcionario INT NOT NULL,
     fecha DATE NOT NULL,
     hora_entrada TIME NOT NULL,
     hora_salida TIME DEFAULT NULL,
     tiempo_permanencia VARCHAR(50) DEFAULT NULL,
     FOREIGN KEY (id_persona) REFERENCES persona(id_persona),
-    FOREIGN KEY (id_despacho) REFERENCES despacho(id_despacho)
+    FOREIGN KEY (id_despacho) REFERENCES despacho(id_despacho),
+    FOREIGN KEY (id_funcionario) REFERENCES funcionario(id_funcionario)
 );
 
 -- Datos de prueba para despachos
@@ -37,6 +47,16 @@ INSERT INTO despacho (nombre) VALUES
 ('Contabilidad'),
 ('Sistemas');
 
+-- Datos de prueba para funcionarios
+INSERT INTO funcionario (id_despacho, nombre, cargo) VALUES 
+(1, 'Lic. Roberto Gómez', 'Gerente General'),
+(2, 'Dra. Elena Rivas', 'Jefa de RR.HH.'),
+(3, 'Ing. Mario Soto', 'Jefe de Logística'),
+(4, 'CPCC. Julia Mendoza', 'Contadora General'),
+(5, 'Ing. Kevin Torres', 'Jefe de Sistemas'),
+(2, 'Lic. Ana Pérez', 'Asistente de RR.HH.'),
+(5, 'Ing. Luis García', 'Especialista de Redes');
+
 -- Datos de prueba para personas
 INSERT INTO persona (nombre, dni) VALUES 
 ('Juan Pérez', '12345678'),
@@ -45,15 +65,10 @@ INSERT INTO persona (nombre, dni) VALUES
 ('Ana Martínez', '44332211'),
 ('Luis Rodríguez', '55667788');
 
--- Datos de prueba para visitas (algunas con salida, otras sin salida)
-INSERT INTO visita (id_persona, id_despacho, persona_visitada, fecha, hora_entrada, hora_salida, tiempo_permanencia) VALUES 
-(1, 1, 'Lic. Roberto Gómez', CURDATE(), '08:00:00', '09:30:00', '1 hora 30 minutos'),
-(2, 2, 'Dra. Elena Rivas', CURDATE(), '08:15:00', '08:45:00', '0 horas 30 minutos'),
-(3, 3, 'Ing. Mario Soto', CURDATE(), '09:00:00', NULL, NULL),
-(4, 4, 'CPCC. Julia Mendoza', CURDATE(), '09:30:00', '11:00:00', '1 hora 30 minutos'),
-(5, 5, 'Ing. Kevin Torres', CURDATE(), '10:00:00', NULL, NULL),
-(1, 2, 'Lic. Roberto Gómez', DATE_SUB(CURDATE(), INTERVAL 1 DAY), '14:00:00', '15:15:00', '1 hora 15 minutos'),
-(2, 3, 'Ing. Mario Soto', DATE_SUB(CURDATE(), INTERVAL 1 DAY), '15:00:00', '16:00:00', '1 hora 0 minutos'),
-(3, 1, 'Lic. Roberto Gómez', DATE_SUB(CURDATE(), INTERVAL 2 DAY), '08:00:00', '10:30:00', '2 horas 30 minutos'),
-(4, 5, 'Ing. Kevin Torres', DATE_SUB(CURDATE(), INTERVAL 2 DAY), '11:00:00', '11:45:00', '0 horas 45 minutos'),
-(5, 2, 'Dra. Elena Rivas', DATE_SUB(CURDATE(), INTERVAL 3 DAY), '09:00:00', '12:00:00', '3 horas 0 minutos');
+-- Datos de prueba para visitas
+INSERT INTO visita (id_persona, id_despacho, id_funcionario, fecha, hora_entrada, hora_salida, tiempo_permanencia) VALUES 
+(1, 1, 1, CURDATE(), '08:00:00', '09:30:00', '1 hora 30 minutos'),
+(2, 2, 2, CURDATE(), '08:15:00', '08:45:00', '0 horas 30 minutos'),
+(3, 3, 3, CURDATE(), '09:00:00', NULL, NULL),
+(4, 4, 4, CURDATE(), '09:30:00', '11:00:00', '1 hora 30 minutos'),
+(5, 5, 5, CURDATE(), '10:00:00', NULL, NULL);

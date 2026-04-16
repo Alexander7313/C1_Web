@@ -37,10 +37,11 @@ $avg_min = mysqli_fetch_assoc($res_avg)['minutos_promedio'];
 $avg_formato = round($avg_min) . " minutos";
 
 // 4. Historial de Visitas (últimas 20)
-$sql_historial = "SELECT v.*, p.nombre as visitante, p.dni, d.nombre as despacho 
+$sql_historial = "SELECT v.*, p.nombre as visitante, p.dni, d.nombre as despacho, f.nombre as funcionario 
                   FROM visita v 
                   JOIN persona p ON v.id_persona = p.id_persona 
                   JOIN despacho d ON v.id_despacho = d.id_despacho 
+                  JOIN funcionario f ON v.id_funcionario = f.id_funcionario
                   ORDER BY v.fecha DESC, v.hora_entrada DESC LIMIT 20";
 $res_historial = mysqli_query($conexion, $sql_historial);
 ?>
@@ -123,7 +124,7 @@ $res_historial = mysqli_query($conexion, $sql_historial);
                                             <td><?php echo $row['fecha']; ?></td>
                                             <td class="fw-bold"><?php echo $row['visitante']; ?></td>
                                             <td><?php echo $row['dni']; ?></td>
-                                            <td><?php echo $row['persona_visitada']; ?></td>
+                                            <td><?php echo $row['funcionario']; ?></td>
                                             <td><?php echo $row['despacho']; ?></td>
                                             <td><span class="text-success"><?php echo $row['hora_entrada']; ?></span></td>
                                             <td><span class="text-danger"><?php echo $row['hora_salida'] ?? '--:--'; ?></span></td>

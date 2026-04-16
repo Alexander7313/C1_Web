@@ -10,10 +10,11 @@ Este es un sistema web profesional diseñado para el registro y gestión de ingr
 
 ## 📊 Diseño de Base de Datos
 
-El sistema opera bajo un modelo simplificado de tres tablas principales:
+El sistema opera bajo un modelo optimizado de cuatro tablas:
 - **`despacho`**: Catálogo de oficinas y dependencias institucionales.
+- **`funcionario`**: Personal autorizado asignado a cada despacho para recibir visitas.
 - **`persona`**: Registro único de visitantes (vinculado por DNI).
-- **`visita`**: Historial de ingresos, salidas y tiempos de permanencia.
+- **`visita`**: Historial detallado de ingresos, salidas y tiempos de permanencia.
 
 ## ⚙️ Instalación en Local (localhost)
 

@@ -41,10 +41,11 @@ if (isset($_GET['finalizar'])) {
 }
 
 // Obtener personas actualmente dentro
-$sql_dentro = "SELECT v.*, p.nombre, p.dni, d.nombre as despacho 
+$sql_dentro = "SELECT v.*, p.nombre, p.dni, d.nombre as despacho, f.nombre as funcionario 
                FROM visita v 
                JOIN persona p ON v.id_persona = p.id_persona 
                JOIN despacho d ON v.id_despacho = d.id_despacho 
+               JOIN funcionario f ON v.id_funcionario = f.id_funcionario
                WHERE v.hora_salida IS NULL 
                ORDER BY v.hora_entrada DESC";
 $res_dentro = mysqli_query($conexion, $sql_dentro);
@@ -82,7 +83,7 @@ $res_dentro = mysqli_query($conexion, $sql_dentro);
                                             <td><span class="badge bg-secondary"><?php echo $row['dni']; ?></span></td>
                                             <td class="fw-bold"><?php echo $row['nombre']; ?></td>
                                             <td>
-                                                <div class="small fw-bold"><?php echo $row['persona_visitada']; ?></div>
+                                                <div class="small fw-bold"><?php echo $row['funcionario']; ?></div>
                                                 <div class="small text-muted"><?php echo $row['despacho']; ?></div>
                                             </td>
                                             <td><?php echo $row['hora_entrada']; ?></td>
